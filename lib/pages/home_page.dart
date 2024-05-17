@@ -22,7 +22,7 @@ class HomePage extends StatelessWidget {
         appBar: AppBar(
           centerTitle: true,
           title: Text("Chat App"),
-          backgroundColor: Colors.cyan,
+          backgroundColor: Colors.cyanAccent,
           elevation: 1,
           
         ),
@@ -38,11 +38,11 @@ Widget _buildUserList(){
     stream: _chatServices.getUserStream(),
      builder: (context, snapshot){
       if(snapshot.hasError){
-        return Text("Error");
+        return const Text("Error");
       }
 
       if (snapshot.connectionState == ConnectionState.waiting){
-        return Text("Loading");
+        return const Text("Loading");
       }
 
       return ListView(

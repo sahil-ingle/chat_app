@@ -7,7 +7,7 @@ class MyTextField extends StatelessWidget {
   final FocusNode? focusNode;
   final double horizontalPadding;
 
-  const MyTextField({super.key, required this.obscureText, required this.hintText, required this.controller, this.focusNode, this.horizontalPadding = 30});
+  const MyTextField({super.key, required this.obscureText, required this.hintText, required this.controller, this.focusNode, this.horizontalPadding = 30,});
 
   @override
   Widget build(BuildContext context) {
@@ -17,13 +17,13 @@ class MyTextField extends StatelessWidget {
         focusNode: focusNode,
         controller: controller,
         obscureText: obscureText,
-        
+
         decoration: InputDecoration(
           border: OutlineInputBorder(
             borderSide: const BorderSide(color: Colors.black),
-            borderRadius: BorderRadius.circular(20)
+            borderRadius: BorderRadius.circular(20),
           ),
-          hintText: hintText
+          hintText: hintText,
         ),
       ),
     );

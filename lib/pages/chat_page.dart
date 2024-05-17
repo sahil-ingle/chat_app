@@ -25,6 +25,8 @@ class _ChatPageState extends State<ChatPage> {
   final AuthService _authService = AuthService();
 
   final TextEditingController _messageController = TextEditingController();
+  // ignore: prefer_typing_uninitialized_variables
+  var color;
   
   FocusNode myFocusNode = FocusNode();
   final ScrollController _scrollController = ScrollController();
@@ -116,15 +118,20 @@ void scrollDown(){
 
     var alignment = isCurrentUser ? Alignment.centerRight : Alignment.centerLeft;
 
+    if(isCurrentUser){
+      color = Colors.blue;
+    }else{
+      color = Colors.lightGreen;
+    }
+
     return Container(
       alignment: alignment,
-      child: ChatBubble(message: data["message"], isCurrentUser: isCurrentUser));
+      child: ChatBubble(message: data["message"], isCurrentUser: isCurrentUser, colorName: color,));
   }
 
   Widget _buildUserInput(){
     return Container(
-        color: Colors.white,
-        padding: EdgeInsets.symmetric(vertical: 10),
+        padding: const EdgeInsets.symmetric(vertical: 10),
         child: Row(
           children: [
             Expanded(
@@ -137,7 +144,7 @@ void scrollDown(){
                     ),
             ),
           Container(
-            margin: EdgeInsets.only(right: 20),
+            margin: const EdgeInsets.only(right: 20),
             decoration: BoxDecoration(
               color: Colors.black,
               borderRadius: BorderRadius.circular(50),
