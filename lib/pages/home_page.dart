@@ -57,8 +57,8 @@ Widget _buildUserListItem(
   Map<String,dynamic>userData, BuildContext context
 ){
   if (userData["email"] != _authServices.getCurrentUser()!.email){
-    return UserTile(text: userData["email"], onTap: (){
-      Navigator.push(context, MaterialPageRoute(builder: (context) => ChatPage(receiverEmail: userData["email"],receiverID: userData['uid'],)),
+    return UserTile(text: userData["name"], onTap: (){
+      Navigator.push(context, MaterialPageRoute(builder: (context) => ChatPage(receiverEmail: userData["name"],receiverID: userData['uid'],)),
     );
     }
     );

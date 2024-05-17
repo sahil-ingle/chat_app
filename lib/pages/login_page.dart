@@ -1,25 +1,54 @@
+
+
+import 'package:chat_app/components/my_loading_indicator.dart';
 import 'package:chat_app/services/auth/auth_service.dart';
 import 'package:chat_app/components/my_button.dart';
 import 'package:chat_app/components/my_textfield.dart';
 import 'package:flutter/material.dart';
 
-class LoginPage extends StatelessWidget {
-
-  final TextEditingController _emailController = TextEditingController();
-  final TextEditingController _passwordController = TextEditingController();
+class LoginPage extends StatefulWidget {
 
   final void Function()? onTap;
 
-  LoginPage ({super.key, required this.onTap});
+  const LoginPage ({super.key, required this.onTap});
+
+  @override
+  State<LoginPage> createState() => _LoginPageState();
+}
+
+class _LoginPageState extends State<LoginPage> {
+  final TextEditingController _emailController = TextEditingController();
+
+  final TextEditingController _passwordController = TextEditingController();
+
+  bool loading = false;
 
   void login(BuildContext context) async{ 
+
+    setState(() {
+      loading = true;
+    });
+
     final authService = AuthService();
+    
 
     //login
     try{
-      authService.signInWithEmailPassword(_emailController.text, _passwordController.text);
+      await Future.wait([
+        authService.signInWithEmailPassword(
+          _emailController.text, 
+          _passwordController.text,
+        ),
+        
+      ]);
+      setState(() {
+        loading = false;
+      });
     }
     catch (e){
+      setState(() {
+        loading = false;
+      });
       showDialog(context: context, builder: (context) =>
        AlertDialog( 
         title: Text(
@@ -28,9 +57,8 @@ class LoginPage extends StatelessWidget {
        )
       );
     }
+    
   }
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -73,12 +101,16 @@ class LoginPage extends StatelessWidget {
 
             const SizedBox(height: 20,),
 
+            loading ? const MyLoadingIndicator() : Container(),
+
+            const SizedBox(height: 20,),
+
            Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
             const Text("New User ? "),
             GestureDetector(
-              onTap: onTap,
+              onTap: widget.onTap,
               child: const Text("Register here", style: TextStyle(fontWeight: FontWeight.bold),)
               )
           ]),
